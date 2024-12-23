@@ -1,8 +1,6 @@
 "use client";
 import { useTasks } from "@/context/taskContext";
 import { useUserContext } from "@/context/userContext";
-import { github, moon, profile } from "@/utils/Icons";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -25,7 +23,7 @@ function Header() {
           <span role="img" aria-label="wave">
             👋
           </span>
-          {userId ? `Welcome, ${name}!` : "Welcome to Taskfyer"}
+          {userId ? `Welcome, ${name}!` : "Welcome "}
         </h1>
         <p className="text-sm text-purple-600">
           {userId ? (
