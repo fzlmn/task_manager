@@ -28,3 +28,4 @@ function Page() {  // Renamed from 'page' to 'Page'
 }
 
 export default Page;  // Renamed from 'page' to 'Page'
+

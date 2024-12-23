@@ -9,15 +9,14 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const sendEmail = async ( subject, send_to, send_from, reply_to, template, name, link) => {
+const sendEmail = async (subject, send_to, send_from, reply_to, template, name, link) => {
   const transporter = nodeMailer.createTransport({
-    service: "Outlook365",
-    host: "smtp.office365.com",
-    port: 587,
+    host: process.env.SMTP_HOST, // Use SMTP_HOST from .env
+    port: process.env.SMTP_PORT, // Use SMTP_PORT from .env
     secure: false,
     auth: {
-      user: process.env.USER_EMAIL, //Your Outlook email
-      pass: process.env.EMAIL_PASS, //Your Outlook password
+      user: process.env.SMTP_USER, // SMTP_USER from .env
+      pass: process.env.SMTP_PASSWORD, // SMTP_PASSWORD from .env
     },
   });
 

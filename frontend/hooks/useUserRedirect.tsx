@@ -1,19 +1,19 @@
-"use cleint";
+// hooks/useRedirect.tsx
 import { useUserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-const useRedirect = (redirect: string) => {
+const useRedirect = (redirect: string, role?: string) => {
   const { user, loading } = useUserContext();
   const router = useRouter();
 
   useEffect(() => {
-    if (!user || !user.email) {
-      router.push(redirect);
-    }
+    if (loading) return;  // Wait until the loading state is finished
 
-    // watch for changes to user, redirect, router
-  }, [user, redirect, router]);
+    if (!user || !user.email || (role && user.role !== role)) {
+      router.push(redirect);  // Redirect if user is not logged in or does not have the required role
+    }
+  }, [user, loading, redirect, role, router]);
 };
 
 export default useRedirect;

@@ -25,9 +25,9 @@ function Filters() {
       {priorities.map((priority, index) => (
         <button
           key={index}
-          className={`relative px-1 z-10 font-medium text-sm ${
-            activeIndex === index ? "text-[#3aafae] " : "text-gray-500"
-          }`}
+          className={`relative px-1 z-10 font-medium text-sm 
+            ${activeIndex === index ? "text-purple-600" : "text-gray-500"}
+            hover:text-purple-700 transition-all duration-200`}
           onClick={() => {
             setActiveIndex(index);
             setPriority(priority.toLowerCase());

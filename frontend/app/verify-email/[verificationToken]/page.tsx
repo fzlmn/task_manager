@@ -22,11 +22,11 @@ function Page({ params }: PageProps) {
   };
 
   return (
-    <div className="auth-page flex flex-col justify-center items-center">
-      <div className="bg-white flex flex-col justify-center gap-[1rem] px-[4rem] py-[2rem] rounded-md">
-        <h1 className="text-[#999] text-[2rem]">Verify Your Account</h1>
+    <div className="auth-page flex flex-col justify-center items-center bg-purple-50 min-h-screen">
+      <div className="bg-white flex flex-col justify-center gap-[1rem] px-[4rem] py-[2rem] rounded-md shadow-lg">
+        <h1 className="text-purple-600 text-[2rem]">Verify Your Account</h1>
         <button
-          className="px-4 py-2 self-center bg-blue-500 text-white rounded-md"
+          className="px-4 py-2 self-center bg-purple-600 text-white rounded-md hover:bg-purple-700"
           onClick={handleVerification} // Use the async handler to verify
         >
           Verify

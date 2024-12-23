@@ -7,12 +7,19 @@ interface MainContentLayoutProps {
 }
 
 function MainContentLayout({ children }: MainContentLayoutProps) {
-  const userId = useUserContext().user._id;
+  const { user } = useUserContext(); // Destructure for clarity
+  const hasSidebar = Boolean(user?._id); // Ensure safe access to `_id`
+
   return (
-    <main className={`${userId ? "pr-[20rem]" : ""} pb-[1.5rem] flex h-full`}>
+    <main
+      className={`${
+        hasSidebar ? "pr-[20rem]" : "pr-0"
+      } pb-[1.5rem] flex h-full relative`}
+    >
       {children}
     </main>
   );
 }
+
 
 export default MainContentLayout;

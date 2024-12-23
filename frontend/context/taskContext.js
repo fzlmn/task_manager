@@ -12,7 +12,13 @@ export const TasksProvider = ({ children }) => {
 
   const [tasks, setTasks] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [task, setTask] = React.useState({});
+  const [task, setTask] = React.useState({
+    title: "",
+    description: "",
+    priority: "low",
+    dueDate: "",
+    completed: false,
+  });
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [priority, setPriority] = React.useState("all");
@@ -23,7 +29,13 @@ export const TasksProvider = ({ children }) => {
   const openModalForAdd = () => {
     setModalMode("add");
     setIsEditing(true);
-    setTask({});
+    setTask({
+      title: "",
+      description: "",
+      priority: "low",
+      dueDate: "",
+      completed: false,
+    });
   };
 
   const openModalForEdit = (task) => {
@@ -41,7 +53,13 @@ export const TasksProvider = ({ children }) => {
     setProfileModal(false);
     setModalMode("");
     setActiveTask(null);
-    setTask({});
+    setTask({
+      title: "",
+      description: "",
+      priority: "low",
+      dueDate: "",
+      completed: false,
+    });
   };
 
   // get tasks
@@ -49,7 +67,6 @@ export const TasksProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await axios.get(`${serverUrl}/tasks`);
-
       setTasks(response.data.tasks);
     } catch (error) {
       console.log("Error getting tasks", error);
@@ -62,7 +79,6 @@ export const TasksProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await axios.get(`${serverUrl}/task/${taskId}`);
-
       setTask(response.data);
     } catch (error) {
       console.log("Error getting task", error);
@@ -74,9 +90,7 @@ export const TasksProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.post(`${serverUrl}/task/create`, task);
-
       console.log("Task created", res.data);
-
       setTasks([...tasks, res.data]);
       toast.success("Task created successfully");
     } catch (error) {
@@ -89,14 +103,10 @@ export const TasksProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.patch(`${serverUrl}/task/${task._id}`, task);
-
-      // update the task in the tasks array
-      const newTasks = tasks.map((tsk) => {
-        return tsk._id === res.data._id ? res.data : tsk;
-      });
-
+      const newTasks = tasks.map((tsk) =>
+        tsk._id === res.data._id ? res.data : tsk
+      );
       toast.success("Task updated successfully");
-
       setTasks(newTasks);
     } catch (error) {
       console.log("Error updating task", error);
@@ -107,10 +117,7 @@ export const TasksProvider = ({ children }) => {
     setLoading(true);
     try {
       await axios.delete(`${serverUrl}/task/${taskId}`);
-
-      // remove the task from the tasks array
       const newTasks = tasks.filter((tsk) => tsk._id !== taskId);
-
       setTasks(newTasks);
     } catch (error) {
       console.log("Error deleting task", error);
@@ -118,24 +125,18 @@ export const TasksProvider = ({ children }) => {
   };
 
   const handleInput = (name) => (e) => {
-    if (name === "setTask") {
-      setTask(e);
-    } else {
-      setTask({ ...task, [name]: e.target.value });
-    }
+    setTask((prevTask) => ({
+      ...prevTask,
+      [name]: e.target.value,
+    }));
   };
 
-  // get completed tasks
   const completedTasks = tasks.filter((task) => task.completed);
-
-  // get pending tasks
   const activeTasks = tasks.filter((task) => !task.completed);
 
   useEffect(() => {
     getTasks();
   }, [userId]);
-
-  console.log("Active tasks", activeTasks);
 
   return (
     <TasksContext.Provider
@@ -143,7 +144,6 @@ export const TasksProvider = ({ children }) => {
         tasks,
         loading,
         task,
-        tasks,
         getTask,
         createTask,
         updateTask,
@@ -162,6 +162,7 @@ export const TasksProvider = ({ children }) => {
         activeTasks,
         completedTasks,
         profileModal,
+        setTask,
       }}
     >
       {children}

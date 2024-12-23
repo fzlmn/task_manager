@@ -1,3 +1,4 @@
+
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useContext } from "react";
@@ -332,27 +333,23 @@ export const UserContextProvider = ({ children }) => {
   };
 
   // delete user
-  const deleteUser = async (id) => {
-    setLoading(true);
-    try {
-      const res = await axios.delete(
-        `${serverUrl}/api/v1/admin/users/${id}`,
-        {},
-        {
-          withCredentials: true, // send cookies to the server
-        }
-      );
+const deleteUser = async (id) => {
+  setLoading(true);
+  try {
+    await axios.delete(`${serverUrl}/api/v1/admin/users/${id}`, {
+      withCredentials: true,
+    });
+    toast.success("User deleted successfully");
+    await getAllUsers(); // Refresh users list
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    toast.error(error.response?.data?.message || "Error deleting user");
+  } finally {
+    setLoading(false); // Ensure loading state is cleared
+  }
+};
 
-      toast.success("User deleted successfully");
-      setLoading(false);
-      // refresh the users list
-      getAllUsers();
-    } catch (error) {
-      console.log("Error deleting user", error);
-      toast.error(error.response.data.message);
-      setLoading(false);
-    }
-  };
+
 
   useEffect(() => {
     const loginStatusGetUser = async () => {
@@ -390,6 +387,7 @@ export const UserContextProvider = ({ children }) => {
         changePassword,
         allUsers,
         deleteUser,
+        getAllUsers
       }}
     >
       {children}
