@@ -1,7 +1,7 @@
-"use client"; // Make sure this is included for client-side behavior in Next.js
+"use client";
 
 import React, { useEffect, useState } from "react";
-import { useUserContext } from "../../context/userContext"; // Adjust the import path if needed
+import { useUserContext } from "../../context/userContext";
 
 interface User {
 _id: number;
@@ -38,6 +38,9 @@ try {
 
 if (loading) return <p>Loading...</p>;
 
+// Filter users to show only those with role 'user'
+const filteredUsers = allUsers?.filter((user: User) => user.role === "user");
+
 return (
 <main className="m-6">
     <h1 className="text-2xl font-bold">User Management</h1>
@@ -52,7 +55,7 @@ return (
         </tr>
     </thead>
     <tbody>
-        {allUsers?.map((user: User) => (
+        {filteredUsers?.map((user: User) => (
         <tr key={user._id} className="hover:bg-gray-100">
             <td className="px-4 py-2 border">{user.name}</td>
             <td className="px-4 py-2 border">{user.email}</td>

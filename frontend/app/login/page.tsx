@@ -4,18 +4,18 @@ import LoginForm from "../Components/auth/LoginForm/LoginForm";
 import { useUserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 
-function Page() {  // Renamed from 'page' to 'Page'
+function Page() { 
   const { user } = useUserContext();
   const router = useRouter();
 
   useEffect(() => {
-    // redirect to home page if user is already logged in
+  
     if (user && user._id) {
       router.push("/");
     }
   }, [user, router]);
 
-  // return null or a loading spinner/indicator
+
   if (user && user._id) {
     return null;
   }
@@ -27,5 +27,5 @@ function Page() {  // Renamed from 'page' to 'Page'
   );
 }
 
-export default Page;  // Renamed from 'page' to 'Page'
+export default Page; 
 
